@@ -6,6 +6,7 @@ from datetime import date
 import seaborn as sns
 from pydataset import data
 from env import host, user, password
+import os
 
 # Acquires zillow data from the codeup SQL database and stores it as a .csv, unless a .csv with the data already exists in which case 
 # it will pull the data from there

@@ -6,7 +6,7 @@ from datetime import date
 import seaborn as sns
 from pydataset import data
 from env import host, user, password
-import os
+import sklearn.preprocessing
 
 # Prep function drops features that were used to specify the data to be used, labels counties by county code, added a tax rate feature, dropped 
 # null values, and got rid of outliers in various categories.
@@ -16,7 +16,7 @@ def prep(zillow):
     zillow.drop(columns = ['propertylandusetypeid', 'transactiondate', 'yearbuilt'], inplace = True)
     zillow.fips.replace({6037: 'Los Angeles', 6059: 'Orange', 6111: 'Ventura'}, inplace = True)
     zillow.rename(columns = {'fips': 'county'}, inplace = True)
-    zillow['tax_rate'] = zillow.taxamount / zillow.taxvaluedollarcnt
+    zillow['tax_rate'] = 100 * (zillow.taxamount / zillow.taxvaluedollarcnt)
     zillow.dropna(inplace = True)
     Q1 = zillow['taxvaluedollarcnt'].quantile(0.25)
     Q3 = zillow['taxvaluedollarcnt'].quantile(0.75)
@@ -30,7 +30,7 @@ def prep(zillow):
 
 #  Model prep function drops features not relevant to property value, creates dummies, and scales the data.
 
-def prep_model(zillow_no_out)
+def prep_model(zillow_no_out):
     zillow_no_out.drop(columns = ['tax_rate', 'bathroomcnt', 'taxamount'], inplace = True)
     dummies_county = pd.get_dummies(zillow_no_out[['county']], drop_first = True)
     zillow_no_out.drop(columns = ['county'], inplace = True)
@@ -43,6 +43,6 @@ def prep_model(zillow_no_out)
     zillow_minmax.rename(columns = {i: key[i] for i in range(len(key))} , inplace = True)
     zillow_minmax.drop(columns = ['taxvaluedollarcnt'], inplace = True)
     zillow_no_out.index = zillow_minmax.index
-    zillow_minmax['taxvaluedollarcnt'] = zillow['taxvaluedollarcnt']
+    zillow_minmax['taxvaluedollarcnt'] = zillow_no_out['taxvaluedollarcnt']
     zillow_minmax.dropna(inplace = True)
     return zillow_minmax
