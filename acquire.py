@@ -7,6 +7,9 @@ import seaborn as sns
 from pydataset import data
 from env import host, user, password
 
+# Acquires zillow data from the codeup SQL database and stores it as a .csv, unless a .csv with the data already exists in which case 
+# it will pull the data from there
+
 def get_zillow_data(host = host, user = user, password = password):
     filename = 'zillow.csv'
     if os.path.isfile(filename):
