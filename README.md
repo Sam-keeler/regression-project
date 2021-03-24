@@ -46,7 +46,7 @@
 - Use the best on test data set
 
 ## Findings
-- Biggest determining factors for single unit property value among most models were bathroom count and age
+- Biggest determining factors for single unit property value among most models were bathroom count, county, and age
 - Counties presented in the data came from the California counties of Los Angeles, Ventura, and Orange.
 - In my statistical tests, it was found that square footage was not independent of property value
 - It was also found that there is likely a difference between Los Angeles county tax rate and the overall average county tax rate
